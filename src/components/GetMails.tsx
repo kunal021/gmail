@@ -15,16 +15,7 @@ function GetMails() {
   const [APIKEY, setAPIKEY] = useState("");
 
   useEffect(() => {
-    const loadMailsFromLocalStorage = () => {
-      const storedMails = localStorage.getItem("mails");
-      if (storedMails) {
-        setMail(JSON.parse(storedMails));
-      }
-    };
-
     setAPIKEY(localStorage.getItem("gemini_api_key")!);
-
-    loadMailsFromLocalStorage();
     const getMailId = async () => {
       try {
         setLoading(true);
@@ -38,21 +29,7 @@ function GetMails() {
           })
         );
 
-        setMail((prevMails) => {
-          const mailIdSet = new Set(prevMails.map((mail) => mail.id));
-          const newMails = classifiedMails.filter(
-            (mail) => !mailIdSet.has(mail.id)
-          );
-
-          console.log("newMails: ", newMails);
-          console.log("prevMails: ", prevMails);
-          const updatedMails = [...newMails, ...prevMails];
-
-          console.log("allMails: ", updatedMails);
-          localStorage.setItem("mails", JSON.stringify(updatedMails));
-
-          return updatedMails;
-        });
+        setMail(classifiedMails);
       } catch (error) {
         console.log(error);
       } finally {

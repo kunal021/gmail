@@ -6,7 +6,7 @@ export function SignOut() {
     <form
       action={async () => {
         "use server";
-        await signOut({ redirectTo: publicRoutes });
+        await signOut({ redirectTo: publicRoutes[0] });
       }}
     >
       <Button className="text-xs md:text-base" type="submit">

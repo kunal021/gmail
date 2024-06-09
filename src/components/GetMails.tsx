@@ -5,6 +5,7 @@ import MailItem from "./MailItem";
 import Loader from "./Loader";
 import SelectResult from "./SelectResult";
 import { classifyMail } from "@/utils/categorizeMails";
+import { Button } from "./ui/button";
 
 function GetMails() {
   const [mail, setMail] = useState<Mail[]>([]);
@@ -22,14 +23,7 @@ function GetMails() {
         const response = await axios.get(`/api/email?maxResults=${maxResults}`);
         const fetchedMails: Mail[] = response.data.data;
 
-        const classifiedMails = await Promise.all(
-          fetchedMails.map(async (mail) => {
-            const classification = await classifyMail(mail, 3, APIKEY!);
-            return { ...mail, category: classification };
-          })
-        );
-
-        setMail(classifiedMails);
+        setMail(fetchedMails);
       } catch (error) {
         console.log(error);
       } finally {
@@ -39,6 +33,23 @@ function GetMails() {
 
     getMailId();
   }, [maxResults, APIKEY]);
+
+  const classifyMails = async () => {
+    try {
+      setLoading(true);
+      const classifiedMails = await Promise.all(
+        mail.map(async (mail) => {
+          const classification = await classifyMail(mail, 3, APIKEY!);
+          return { ...mail, category: classification };
+        })
+      );
+      setMail(classifiedMails);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleMailClick = (mail: Mail) => {
     setSelectedMail(mail);
@@ -64,7 +75,10 @@ function GetMails() {
 
   return (
     <div className="flex flex-col justify-between items-start my-5 mx-5 md:mx-16 lg:mx-24 space-y-5">
-      <SelectResult maxResult={maxResults} setMaxResult={setMaxResults} />
+      <div>
+        <SelectResult maxResult={maxResults} setMaxResult={setMaxResults} />
+        <Button onClick={classifyMails}>Classify</Button>
+      </div>
       <div className="">
         {mail.map((data, num) => (
           <div

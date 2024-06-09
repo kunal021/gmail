@@ -6,25 +6,6 @@ import axios from "axios";
 
 const prisma = new PrismaClient();
 
-declare module "next-auth" {
-  interface Session {
-    accessToken: string;
-    refreshToken: string;
-    error?: "RefreshAccessTokenError";
-    // user: {
-    //   id: string;
-    // };
-  }
-
-  interface JWT {
-    expires_at: number;
-    accessToken: string;
-    refreshToken: string;
-    accessTokenExpires: number;
-    error?: string;
-  }
-}
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
@@ -66,6 +47,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: token?.name,
           email: token?.email,
           image: token?.picture,
+          emailVerified: null,
         };
         return {
           access_token: account.access_token,

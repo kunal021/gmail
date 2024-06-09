@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 function GetMails() {
   const [mail, setMail] = useState<Mail[]>([]);
   const [loading, setLoading] = useState(false);
+  const [classifyLoading, setClassifyLoading] = useState(false);
   const [selectedMail, setSelectedMail] = useState<Mail | null>(null);
   const [readMailIds, setReadMailIds] = useState<string[]>([]);
   const [maxResults, setMaxResults] = useState(10);
@@ -36,7 +37,7 @@ function GetMails() {
 
   const classifyMails = async () => {
     try {
-      setLoading(true);
+      setClassifyLoading(true);
       const classifiedMails = await Promise.all(
         mail.map(async (mail) => {
           const classification = await classifyMail(mail, 3, APIKEY!);
@@ -47,7 +48,7 @@ function GetMails() {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false);
+      setClassifyLoading(false);
     }
   };
 
@@ -107,7 +108,11 @@ function GetMails() {
               {new Date(Number(data.internalDate)).toLocaleString() ||
                 "Unknown Date"}
             </p>
-            <p className="w-1/4">{data.category || "Uncategorized"}</p>
+            {classifyLoading ? (
+              <Loader />
+            ) : (
+              <p className="w-1/4">{data.category || "Uncategorized"}</p>
+            )}
           </div>
         ))}
       </div>

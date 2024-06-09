@@ -23,11 +23,6 @@ declare module "next-auth" {
     accessTokenExpires: number;
     error?: string;
   }
-  interface User {
-    id: string;
-    email: string;
-    emailVerified: Date | null;
-  }
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -71,7 +66,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: token?.name,
           email: token?.email,
           image: token?.picture,
-          emailVerified: null,
         };
         return {
           access_token: account.access_token,

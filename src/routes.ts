@@ -1,9 +1,9 @@
 /**
  * An array of routes that are accessable to public
  * These route do not requires authentication
- * @type {string}
+ * @type {string[]}
  */
-export const publicRoutes = "/";
+export const publicRoutes = ["/", "/getkey"];
 
 /**
  * An array of routes that are used for authentication

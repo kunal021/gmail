@@ -22,6 +22,8 @@ const SelectResult: React.FC<{
           <SelectItem value={"20"}>20</SelectItem>
           <SelectItem value={"25"}>25</SelectItem>
           <SelectItem value={"30"}>30</SelectItem>
+          <SelectItem value={"45"}>40</SelectItem>
+          <SelectItem value={"50"}>50</SelectItem>
         </SelectContent>
       </Select>
     </div>

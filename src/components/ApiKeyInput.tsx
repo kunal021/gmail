@@ -14,7 +14,7 @@ function ApiKeyInput() {
       <Input
         value={value}
         onChange={(e) => setvalue(e.target.value)}
-        placeholder="Enter Gemini API"
+        placeholder="Enter Gemini API Key"
         className="border-gray-500 border-2 focus-visible:ring-offset-0 focus-visible:ring-0 focus-visible:border-black"
       />
     </div>

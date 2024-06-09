@@ -7,11 +7,13 @@ declare module "next-auth" {
     accessToken: string;
     refreshToken: string;
     error?: "RefreshAccessTokenError";
-    user: {
-      id: string;
-      email: string;
-      emailVerified: null;
-    };
+    // user: {
+    //   image: any;
+    //   name: ReactNode;
+    //   id: string;
+    //   email: string;
+    //   emailVerified: null;
+    // };
   }
 
   export interface JWT {
@@ -20,11 +22,5 @@ declare module "next-auth" {
     refreshToken: string;
     accessTokenExpires: number;
     error?: string;
-  }
-
-  export interface User {
-    id: string;
-    email: string;
-    emailVerified: null;
   }
 }

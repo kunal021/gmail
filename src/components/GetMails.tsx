@@ -75,7 +75,7 @@ function GetMails() {
 
   return (
     <div className="flex flex-col justify-between items-start my-5 mx-5 md:mx-16 lg:mx-24 space-y-5">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center w-full">
         <SelectResult maxResult={maxResults} setMaxResult={setMaxResults} />
         <Button onClick={classifyMails}>Classify</Button>
       </div>

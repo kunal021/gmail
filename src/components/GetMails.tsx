@@ -6,6 +6,7 @@ import Loader from "./Loader";
 import SelectResult from "./SelectResult";
 import { classifyMail } from "@/utils/categorizeMails";
 import { Button } from "./ui/button";
+import { Loader2 } from "lucide-react";
 
 function GetMails() {
   const [mail, setMail] = useState<Mail[]>([]);
@@ -109,7 +110,7 @@ function GetMails() {
                 "Unknown Date"}
             </p>
             {classifyLoading ? (
-              <Loader />
+              <Loader2 className="animate-spin" />
             ) : (
               <p className="w-1/4">{data.category || "Uncategorized"}</p>
             )}

@@ -1,7 +1,8 @@
-import NextAuth, { type User } from "next-auth";
+import NextAuth from "next-auth";
+// import { User } from "../next-auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import axios from "axios";
 
 const prisma = new PrismaClient();
@@ -24,7 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async session({ session, token }) {
       if (token.user) {
-        session.user = token.user as User;
+        session.user = token.user as User & { emailVerified: null };
       }
       if (token.sub && session.user) {
         session.user.id = token.sub;
@@ -45,9 +46,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const userProfile: User = {
           id: token.sub,
           name: token?.name,
-          email: token?.email,
+          email: token.email,
           image: token?.picture,
           emailVerified: null,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         };
         return {
           access_token: account.access_token,
